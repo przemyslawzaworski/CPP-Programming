@@ -27,5 +27,5 @@ int main()
 {
 	registry_read("Hardware\\Description\\System\\CentralProcessor\\0","ProcessorNameString",REG_SZ);
 	registry_write("Hardware\\Description\\System\\CentralProcessor\\0","NewValue",REG_SZ,"Content");
-    return 0;
+	return 0;
 }
