@@ -1,1 +1,1 @@
-C++ Windows Command Line.
+C++ Windows Command Line and GPU programming.
