@@ -1,4 +1,5 @@
-//g++ -s -o Asm.exe Asm.cpp  "-IC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" "-LC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" -ld3d9 -ld3dx9
+// g++ -s -o Asm.exe Asm.cpp  "-IC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" "-LC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" -ld3d9 -ld3dx9
+// fxc /T ps_2_0 /Fc C:\pixel.asm C:\pixel.hlsl
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 #define DLL D3DXSHADER_USE_LEGACY_D3DX9_31_DLL
