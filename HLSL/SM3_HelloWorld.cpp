@@ -1,7 +1,7 @@
 //g++ -s -o SM3_HelloWorld.exe SM3_HelloWorld.cpp  "-IC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" "-LC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" -ld3d9 -ld3dx9
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
-#define DLL D3DXSHADER_USE_LEGACY_D3DX9_31_DLL
+#define DLL D3DXSHADER_OPTIMIZATION_LEVEL3|D3DXSHADER_PREFER_FLOW_CONTROL
 #define MSAA D3DMULTISAMPLE_NONE
 #define VSYNC D3DPRESENT_INTERVAL_IMMEDIATE
 #define SWAP D3DSWAPEFFECT_DISCARD
@@ -38,22 +38,16 @@ int main()
 	d3dDevice->SetVertexShader(VertexShader);
 	d3dDevice->SetPixelShader(PixelShader);
 	d3dDevice->SetFVF(D3DFVF_XYZ);
-	float quad[20] = {1,-1,0,1,0,-1,-1,0,0,0,1,1,0,1,1,-1,1,0,0,1};	
+	float quad[20] = {1,-1,0,1,0,-1,-1,0,0,0,1,1,0,1,1,-1,1,0,0,1}, S = GetTickCount()*0.001f;
 	do 
 	{
 		d3dDevice->BeginScene();
-		float timer[1] = {GetTickCount()*0.001f};
+		float timer[1] = {GetTickCount()*0.001f-S};
 		d3dDevice->SetPixelShaderConstantF(0, timer, 1);
 		d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, quad, 5*sizeof(float));
 		d3dDevice->EndScene();
 		d3dDevice->Present(NULL, NULL, NULL, NULL);		
 	}
 	while ( !GetAsyncKeyState(VK_ESCAPE) );
-	VertexShader->Release();
-	PixelShader->Release();
-	VSBuffer->Release();
-	PSBuffer->Release();
-	d3dDevice->Release();
-	d3d->Release();	
 	return 0;
 }
