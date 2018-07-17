@@ -26,7 +26,7 @@ static const char* FragmentShader = \
 int main()
 {
 	ShowCursor(0);
-	PIXELFORMATDESCRIPTOR pfd = {0,0,PFD_DOUBLEBUFFER,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	PIXELFORMATDESCRIPTOR pfd = {0,0,PFD_DOUBLEBUFFER};
 	HDC hdc = GetDC(CreateWindow((LPCSTR)0xC018,0,WS_POPUP|WS_VISIBLE|WS_MAXIMIZE,0,0,1920,1080,0,0,0,0));
 	SetPixelFormat(hdc,ChoosePixelFormat(hdc,&pfd),&pfd);
 	wglMakeCurrent(hdc,wglCreateContext(hdc));
