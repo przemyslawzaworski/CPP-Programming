@@ -17,10 +17,11 @@ static const char* VertexShader = \
 static const char* FragmentShader = \
 "#version 450\n"
 "layout (location=0) out vec4 color;"
+"layout (location=1) uniform float time;"
 "void main()"
 "{"
 	"vec2 uv = gl_FragCoord.xy/vec2(1920,1080);"
-	"color = vec4(uv,0,1);"
+	"color = mix(vec4(0.0),vec4(uv,0,1),step(uv.x,sin(time)*0.5+0.5));"
 "}";
 
 int main()
@@ -37,9 +38,11 @@ int main()
 	((PFNGLBINDPROGRAMPIPELINEPROC)wglGetProcAddress("glBindProgramPipeline")) (p);
 	((PFNGLUSEPROGRAMSTAGESPROC)wglGetProcAddress("glUseProgramStages"))(p, GL_VERTEX_SHADER_BIT, vs);
 	((PFNGLUSEPROGRAMSTAGESPROC)wglGetProcAddress("glUseProgramStages"))(p, GL_FRAGMENT_SHADER_BIT, fs);
-	((PFNWGLSWAPINTERVALEXTPROC) wglGetProcAddress ("wglSwapIntervalEXT")) (0);
+	((PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress ("wglSwapIntervalEXT")) (0);
 	do 
 	{
+		GLfloat t = 0.5f * GetTickCount()*0.001f;
+		((PFNGLPROGRAMUNIFORM1FVPROC)wglGetProcAddress("glProgramUniform1fv"))( fs, 1, 1, &t);
 		glRects(-1,-1,1,1);		
 		wglSwapLayerBuffers(hdc,WGL_SWAP_MAIN_PLANE); 
 	} while (!GetAsyncKeyState(VK_ESCAPE));
