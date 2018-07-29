@@ -11,27 +11,27 @@
 
 static const char VertexShaderCode[] = \
 	"vs.3.0\n"
-    "dcl_position v0\n"
-    "dcl_position o0\n"
-    "mov o0, v0\n";
+	"dcl_position v0\n"
+	"dcl_position o0\n"
+	"mov o0, v0\n";
 
 static const char PixelShaderCode[] = \
 	"ps.3.0\n"
-    "def c0, 2, -1366, -768, 0.00520833349\n"
-    "def c1, 10, 0, 1, 0\n"
-    "def c2, 0.159154937, 0.5, 6.28318548, -3.14159274\n"
-    "dcl vPos.xy\n"
-    "mad r0.xy, vPos, c0.x, c0.yzzw\n"
-    "mul r0.xy, r0, c0.w\n"
-    "mul r0.z, r0_abs.y, r0_abs.x\n"
-    "mad r0.z, r0.z, c2.x, c2.y\n"
-    "frc r0.z, r0.z\n"
-    "mad r0.z, r0.z, c2.z, c2.w\n"
-    "sincos r1.x, r0.z\n"
-    "mul r0.z, r1.x, c1.x\n"
-    "lrp r1.x, r0.z, r0_abs.y, r0_abs.x\n"
-    "add oC0.x, -r1_abs.x, c1.x\n"
-    "mov oC0.yzw, c1.xyyz\n";
+	"def c0, 2, -1366, -768, 0.00520833349\n"
+	"def c1, 10, 0, 1, 0\n"
+	"def c2, 0.159154937, 0.5, 6.28318548, -3.14159274\n"
+	"dcl vPos.xy\n"
+	"mad r0.xy, vPos, c0.x, c0.yzzw\n"
+	"mul r0.xy, r0, c0.w\n"
+	"mul r0.z, r0_abs.y, r0_abs.x\n"
+	"mad r0.z, r0.z, c2.x, c2.y\n"
+	"frc r0.z, r0.z\n"
+	"mad r0.z, r0.z, c2.z, c2.w\n"
+	"sincos r1.x, r0.z\n"
+	"mul r0.z, r1.x, c1.x\n"
+	"lrp r1.x, r0.z, r0_abs.y, r0_abs.x\n"
+	"add oC0.x, -r1_abs.x, c1.x\n"
+	"mov oC0.yzw, c1.xyyz\n";
 
 int main()
 {
