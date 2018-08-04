@@ -1,9 +1,16 @@
-// gcc -x c -s -o ComputeShader.exe ComputeShader.c -mwindows -lopengl32  
 #include <windows.h>
 #include <GL/gl.h>
-#include "glext.h"
 
-typedef int (APIENTRY* PFNWGLSWAPINTERVALEXTPROC) (int interval);
+typedef int(APIENTRY* PFNWGLSWAPINTERVALEXTPROC)(int i);
+typedef GLuint(APIENTRY* PFNGLCREATEPROGRAMPROC)();
+typedef GLuint(APIENTRY* PFNGLCREATESHADERPROC)(GLenum t);
+typedef void(APIENTRY* PFNGLSHADERSOURCEPROC)(GLuint s, GLsizei c, const char*const*string, const GLint* i);
+typedef void(APIENTRY* PFNGLCOMPILESHADERPROC)(GLuint s);
+typedef void(APIENTRY* PFNGLATTACHSHADERPROC)(GLuint p, GLuint s);
+typedef void(APIENTRY* PFNGLLINKPROGRAMPROC)(GLuint p);
+typedef void(APIENTRY* PFNGLUSEPROGRAMPROC)(GLuint p);
+typedef void (APIENTRY* PFNGLDISPATCHCOMPUTEPROC) (GLuint x, GLuint y, GLuint z);
+typedef void (APIENTRY* PFNGLBINDIMAGETEXTUREPROC) (GLuint a, GLuint b, GLint c, GLboolean d, GLint e, GLenum f, GLenum g);
 
 static const char* ComputeShader = \
 	"#version 430 core\n"
@@ -33,7 +40,7 @@ void LoadTexture()
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,1024,1024,0,GL_RGBA,GL_FLOAT,0);
-	((PFNGLBINDIMAGETEXTUREPROC)wglGetProcAddress("glBindImageTexture"))(0,h,0,GL_FALSE,0,GL_WRITE_ONLY,GL_RGBA8);
+	((PFNGLBINDIMAGETEXTUREPROC)wglGetProcAddress("glBindImageTexture"))(0,h,0,GL_FALSE,0,0x88B9,GL_RGBA8);
 }
 
 int MakeShader(const char* source, GLenum type)
@@ -55,8 +62,8 @@ int main()
 	SetPixelFormat(hdc, ChoosePixelFormat(hdc, &pfd), &pfd);
 	wglMakeCurrent(hdc, wglCreateContext(hdc));
 	((PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress ("wglSwapIntervalEXT")) (0);	
-	int FS = MakeShader(FragmentShader,GL_FRAGMENT_SHADER);
-	int CS = MakeShader(ComputeShader,GL_COMPUTE_SHADER);
+	int FS = MakeShader(FragmentShader,0x8B30);
+	int CS = MakeShader(ComputeShader,0x91B9);
 	LoadTexture();
 	((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(CS);
 	((PFNGLDISPATCHCOMPUTEPROC)wglGetProcAddress("glDispatchCompute"))(1024/16,1024/16,1);
