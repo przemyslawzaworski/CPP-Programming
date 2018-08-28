@@ -2,8 +2,6 @@
 #include <GL/gl.h>
 #include <stddef.h>
 #include <math.h>
-#include<stdio.h>
-#include <stdlib.h>
 
 #define deg2rad(x) (x * 3.14159265358979323846f / 180.0f)
 #define ModelPositionX 0.0f
