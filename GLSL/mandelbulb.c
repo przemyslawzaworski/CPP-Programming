@@ -14,7 +14,6 @@ typedef void(APIENTRY* PFNGLUSEPROGRAMPROC)(GLuint p);
 static const char* FragmentShader = \
 	"#version 450 \n"
 	"layout (location=0) out vec4 color;"
-
 	"float map( in vec3 p )"
 	"{"
 		"vec3 w = p;"
@@ -40,7 +39,6 @@ static const char* FragmentShader = \
 		"}"
 		"return 0.25*log(m)*sqrt(m)/dz;"
 	"}"
-
 	"vec4 raymarch (vec3 ro, vec3 rd)"
 	"{"
 		"for (int i=0;i<128;i++)"
@@ -55,7 +53,6 @@ static const char* FragmentShader = \
 		"}"
 		"return vec4(0,0,0,1);"
 	"}"
-
 	"void main()"
 	"{"
 		"vec2 uv = (2.0*gl_FragCoord.xy - vec2(1920,1080))/1080;"
@@ -68,7 +65,7 @@ int main()
 {
 	ShowCursor(0);
 	PIXELFORMATDESCRIPTOR pfd = { 0,0,PFD_DOUBLEBUFFER };
-	HDC hdc = GetDC(CreateWindow("static", 0, WS_POPUP|WS_VISIBLE|WS_MAXIMIZE, 0, 0, 19200, 1080, 0, 0, 0, 0));
+	HDC hdc = GetDC(CreateWindow("static", 0, WS_POPUP|WS_VISIBLE|WS_MAXIMIZE, 0, 0, 1920, 1080, 0, 0, 0, 0));
 	SetPixelFormat(hdc, ChoosePixelFormat(hdc, &pfd), &pfd);
 	wglMakeCurrent(hdc, wglCreateContext(hdc));
 	((PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT")) (0);
