@@ -1,5 +1,5 @@
 // nvcc -o surface.exe surface.cu -ID:\CUDA\Samples\common\inc -lopengl32 -arch=sm_30 user32.lib gdi32.lib
-// Przemyslaw Zaworski 13.12.2018
+// Przemyslaw Zaworski 13.12.2018, fixed 28.04.2019
 
 #include <windows.h>
 #include <cuda_gl_interop.h>
@@ -49,6 +49,7 @@ int main()
 	{
 		mainImage <<< grid, block >>> (GetTickCount()*0.001f);
 		cudaDeviceSynchronize();
+		glBindTexture(GL_TEXTURE_2D, store);
 		glBegin(GL_QUADS);
 		glTexCoord2i(0, 0); glVertex2i(0, 0);
 		glTexCoord2i(0, 1); glVertex2i(0, height);
