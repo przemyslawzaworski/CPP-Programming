@@ -107,6 +107,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
 		}
+		glBindTexture(GL_TEXTURE_2D, 1);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(iTime, GetTickCount()*0.001f);
 		((PFNGLDISPATCHCOMPUTEPROC)wglGetProcAddress("glDispatchCompute"))(width/8, height/8, 1);		
 		glBegin(GL_QUADS);
