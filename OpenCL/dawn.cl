@@ -142,7 +142,7 @@ static const char* ComputeKernel =
 
 static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (uMsg == WM_KEYUP && wParam == VK_ESCAPE)
+	if( uMsg==WM_CLOSE || uMsg==WM_DESTROY || (uMsg==WM_KEYDOWN && wParam==VK_ESCAPE) )
 	{
 		PostQuitMessage(0); return 0;
 	}
@@ -158,7 +158,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 	WNDCLASS win = {CS_OWNDC|CS_HREDRAW|CS_VREDRAW, WindowProc, 0, 0, 0, 0, 0, (HBRUSH)(COLOR_WINDOW+1), 0, "OpenCL Demo"};
 	RegisterClass(&win);
-	HWND hwnd = CreateWindowEx(0, win.lpszClassName, "OpenCL Demo", WS_VISIBLE|WS_OVERLAPPEDWINDOW, 0, 0, width, height, 0, 0, 0, 0);
+	HDC hdc = GetDC(CreateWindowEx(0, win.lpszClassName, "OpenCL Demo", WS_VISIBLE|WS_OVERLAPPEDWINDOW, 0, 0, width, height, 0, 0, 0, 0));
 	const BITMAPINFO bmi = { {sizeof(BITMAPINFOHEADER),width,height,1,32,BI_RGB,0,0,0,0,0},{0,0,0,0} };
 	unsigned char* host = (unsigned char*) malloc(width*height*sizeof(uchar4));
 	size_t bytes;	
@@ -191,7 +191,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		clSetKernelArg (kernel, 1, sizeof(cl_float), (void*)&time);
 		clEnqueueNDRangeKernel(queue,kernel, 1, 0, &size, 0, 0, 0, 0);	
 		clEnqueueReadBuffer (queue, buffer, CL_TRUE, 0, width*height*sizeof(uchar4), host, 0, 0, 0);		
-		StretchDIBits(GetDC(hwnd),0,0,width,height,0,0,width,height,host,&bmi,DIB_RGB_COLORS,SRCCOPY);
+		StretchDIBits(hdc,0,0,width,height,0,0,width,height,host,&bmi,DIB_RGB_COLORS,SRCCOPY);
 	}
 	return 0;
 }
