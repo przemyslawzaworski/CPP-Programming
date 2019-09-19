@@ -262,7 +262,7 @@ static const char* ParticlesVertexShader = \
 		"position += Parabola(uv, uv*spread, _Height, mod(_Timer* _Speed + 2.0*(_Lifetime + factor),_Lifetime + factor));"
 		"position *= vec3(_ParticleScale,_ParticleScale,_ParticleScale);"
 		"position += _EmitterPosition;"
-		"position.y = clamp(position.y,1.0f,position.y);"
+		"position.y = max(position.y,1.0f);"
 		"gl_Position = MVP * vec4(position,1.0);"
 	"}";
 
