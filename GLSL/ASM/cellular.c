@@ -1,6 +1,7 @@
 // Compile with Visual Studio: cl cellular.c opengl32.lib user32.lib gdi32.lib
 
 #include <windows.h>
+#include <GL/gl.h>
 
 typedef void (__stdcall* PFNGLPROGRAMSTRINGARBPROC) (enum target, enum format, int len, const void *string);
 typedef void (__stdcall* PFNGLPROGRAMENVPARAMETER4FVARBPROC) (enum target, int index, const float *params);
