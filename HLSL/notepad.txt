@@ -1,0 +1,17 @@
+Useful functions for DirectX 12 programming.
+
+**************************************************
+// Dump amount of video memory used by application in megabytes.
+void VideoMemoryUsage (IDXGIFactory4* factory)
+{
+	IDXGIAdapter3* adapter;
+	factory->EnumAdapters(0, (IDXGIAdapter**)(&adapter));
+	DXGI_QUERY_VIDEO_MEMORY_INFO videoMemoryInfo;
+	adapter->QueryVideoMemoryInfo(0, DXGI_MEMORY_SEGMENT_GROUP_LOCAL, &videoMemoryInfo);
+	size_t usedVRAM = videoMemoryInfo.CurrentUsage / 1024 / 1024;
+	FILE *f = fopen("vram.txt", "w");
+	fprintf(f, "%zu\n", usedVRAM);
+	fclose(f);	
+}
+
+**************************************************
