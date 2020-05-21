@@ -249,6 +249,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glUseProgram(SH);
 	int time = glGetUniformLocation(SH, "time");
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	float S = GetTickCount()*0.001f;
 	while (!exit)
 	{
 		while(PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
@@ -257,8 +258,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
 		}
-		glClear(GL_COLOR_BUFFER_BIT);		
-		glUniform1f(time, GetTickCount()*0.001f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glUniform1f(time, GetTickCount()*0.001f - S);
 		glDrawMeshTasksNV(0, 1);
 		wglSwapLayerBuffers(hdc, WGL_SWAP_MAIN_PLANE);
 	} 
