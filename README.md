@@ -1,1 +1,1 @@
-C++ Windows Command Line and GPU programming.
+Various C/C++ examples. DirectX, OpenGL, CUDA, Vulkan, OpenCL.
