@@ -1,0 +1,29 @@
+#version 460
+#extension GL_NV_ray_tracing : require
+
+struct RayPayload
+{
+    vec3 color;
+};
+
+layout(set = 0, binding = 0) uniform accelerationStructureNV Scene;
+layout(set = 0, binding = 1, rgba8) uniform image2D ResultImage;
+
+layout(location = 0) rayPayloadNV RayPayload PrimaryRay;
+
+void main()
+{
+    const vec2 uv = (2.0 * vec2(gl_LaunchIDNV.xy) - vec2(gl_LaunchSizeNV.xy)) / gl_LaunchSizeNV.y;
+    const vec3 origin = vec3(0,0,-2.5);
+    const vec3 direction = normalize(vec3(uv,2.0));
+    const uint rayFlags = gl_RayFlagsNoneNV;
+    const uint cullMask = 0xFF;
+    const uint sbtRecordOffset = 0;
+    const uint sbtRecordStride = 0;
+    const uint missIndex = 0;
+    const float tmin = 0.0f;
+    const float tmax = 50.0f;
+    const int payloadLocation = 0;
+    traceNV(Scene, rayFlags, cullMask, sbtRecordOffset, sbtRecordStride, missIndex, origin, tmin, direction, tmax, payloadLocation);
+    imageStore(ResultImage, ivec2(gl_LaunchIDNV.xy), vec4(PrimaryRay.color, 1.0f));
+}
