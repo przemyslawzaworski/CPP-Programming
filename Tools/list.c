@@ -1,3 +1,12 @@
+/* Output:
+4.000000
+11.000000
+-123.500000
+----------------------------------------------
+11.000000
+-123.500000
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,7 +39,7 @@ int main(void)
   Add(&list, -123.5f);
   for (int i=0; i<list.size; i++) printf("%f\n",list.elements[i]);
   printf("----------------------------------------------\n");
-  RemoveAt(&list, 3);
+  RemoveAt(&list, 0);
   for (int i=0; i<list.size; i++) printf("%f\n",list.elements[i]);
   return 0;
 }
