@@ -1,4 +1,4 @@
-// Compile: cl tunnel.c
+// Compile: cl tunnel.c -O2
 // Multithreading software rendering demo
 // To fix: screen tearing
 #include <windows.h>
