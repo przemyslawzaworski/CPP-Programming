@@ -1,0 +1,24 @@
+// glslangValidator -V demo.comp -o demo.spv
+#version 440
+
+layout(local_size_x = 16, local_size_y = 16) in;
+layout(rgba8, binding = 0) uniform restrict readonly image2D _Reader;
+layout(rgba8, binding = 1) uniform restrict writeonly image2D _Writer;
+
+layout(push_constant) uniform constants 
+{
+    float time;
+};
+
+void main()
+{
+	ivec2 resolution = imageSize(_Writer);
+	ivec2 fragCoord = ivec2(gl_GlobalInvocationID.xy);
+	vec2 p = (2.0*fragCoord-resolution.xy)/float(resolution.y);
+	vec3 d = normalize(vec3(p,2.0));
+	vec2 m = d.xz / d.y;
+	m.y += time;
+	vec3 texelColor = imageLoad(_Reader, ivec2(mod(m, 1.0) * 8.0)).rgb; 
+	vec4 fragColor = vec4(mix(vec3(0.01), texelColor, abs(d.y)), 1.0); 	
+	imageStore(_Writer, fragCoord, fragColor);
+}
